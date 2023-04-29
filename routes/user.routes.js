@@ -16,7 +16,7 @@ userRouter.post('/register',registrationValidator,async (req, res) => {
     payload.password = await bcrypt.hash(payload.password,+saltRounds);
     const exists = await userModel.findOne({email: payload.email});
     if(exists){
-        return res.status(408).send('Account already exists');
+        return res.status(408).send({msg: 'Account already exists'});
     }
     const user = new userModel(payload);
     await user.save();
